@@ -65,7 +65,7 @@ DATABASES = {
         'NAME': 'reading_list_manager',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
-        'HOST': 'postgres',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
