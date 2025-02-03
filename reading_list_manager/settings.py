@@ -16,15 +16,26 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+_DJANGO_INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+_THIRD_PARTY_INSTALLED_APPS = [
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
+    'rest_framework',
+]
+
+_PROJECT_INSTALLED_APPS = [
     'books',
 ]
+
+INSTALLED_APPS = _DJANGO_INSTALLED_APPS + _THIRD_PARTY_INSTALLED_APPS + _PROJECT_INSTALLED_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -108,3 +119,28 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Book Management API",
+    "DESCRIPTION": "Book Management API documentation",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "SCHEMA_PATH_PREFIX": "/v1/reading-list-management/",
+    "APPEND_COMPONENTS": {
+        "securitySchemes": {
+            "ApiKeyAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization",
+            },
+        },
+    },
+    "SECURITY": [{"ApiKeyAuth": []}],
+    "COMPONENT_SPLIT_REQUEST": True,
+}
